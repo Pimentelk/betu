@@ -23,9 +23,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::model('book', \App\Models\Book::class);
+        Route::model('task', \App\Models\Task::class);
+        Route::model('tasklist', \App\Models\TaskList::class);
+        Route::model('builder',\App\Models\Exercise::class);
+        Route::model('workout',\App\Models\Workout::class);
     }
 
     /**
