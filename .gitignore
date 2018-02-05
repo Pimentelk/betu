@@ -2,6 +2,8 @@
 /node_modules
 /public/hot
 /public/storage
+/public/bower_components
+/public/oxygen
 /storage/*.key
 /vendor
 /.idea
