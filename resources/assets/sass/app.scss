@@ -1,9 +1,17 @@
-
-// Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
 // Variables
 @import "variables";
 
 // Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import url("/bower_components/gentelella/vendors/bootstrap/dist/css/bootstrap.min.css");
+
+// Font Awesome
+@import url("/bower_components/gentelella/vendors/font-awesome/css/font-awesome.min.css");
+
+// NProgress
+@import url("/bower_components/gentelella/vendors/nprogress/nprogress.css");
+
+// Calendar
+@import url("/bower_components/gentelella/vendors/fullcalendar/dist/fullcalendar.min.css");
+
+// Custom Plugin Styling
+@import url("/bower_components/gentelella/build/css/custom.min.css");
