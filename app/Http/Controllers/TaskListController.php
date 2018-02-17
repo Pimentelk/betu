@@ -18,9 +18,12 @@ class TaskListController extends Controller
      */
     public function index()
     {
+        $user = auth()->user()->load('lists.tasks');
+        
         $data = [
-            'lists' => TaskList::lists()->get()->load('tasks'),
+            'lists' => $user->lists,
         ];        
+
         return view('user.tasklist',$data);
     }
 
