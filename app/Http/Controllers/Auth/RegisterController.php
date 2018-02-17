@@ -6,6 +6,9 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Mail\Activate;
 
 class RegisterController extends Controller
 {
@@ -27,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/tasklist';
 
     /**
      * Create a new controller instance.
@@ -70,6 +73,51 @@ class RegisterController extends Controller
             'email'     => $data['email'],
             'phone'     => $data['phone'],
             'password'  => bcrypt($data['password']),
+            'token'     => ((string) Str::Uuid())
         ]);
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        \Mail::to($user->email)->send(new Activate($user));
+        $this->guard()->logout();
+        return redirect('/login')->with(
+            'status',
+            'We sent you an activation code. Check your email and click on the link to activate your account.'
+        );
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    public function activate($token)
+    {
+        $user = User::where('token', $token)->first();
+
+        if (!isset($user)) {
+            return redirect('/login')->with('warning', "Sorry your email cannot be identified.");
+        }
+
+        if (!$user->verified) {
+            $user->verified = 1;
+            $user->save();
+            $status = "Your e-mail is verified. You can now login.";
+        }
+        else {
+            $status = "Your e-mail is already verified. You can now login.";
+        }
+
+        return redirect('/login')->with('status', $status);
     }
 }
