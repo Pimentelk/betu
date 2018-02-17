@@ -11,17 +11,13 @@
 |
 */
 
+Route::get('/user/activate/{token}', 'Auth\RegisterController@activate');
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
-
-Route::get('logout', function() {
-    Auth::logout();
-    return View::make('auth.login');
-});
-   
 
 Route::resource('dashboard','DashboardController');
 Route::resource('calendar','CalendarController');
