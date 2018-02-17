@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\TaskList;
+use App\User;
+
 class Task extends Model
 {
-    public function tasklist() {
-    	return $this->belongsTo('App\Models\TaskList','id','list_id');
+    public function list() {
+    	return $this->belongsTo(TaskList::class);
     }
 }
